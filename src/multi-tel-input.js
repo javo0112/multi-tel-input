@@ -7,6 +7,8 @@ import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+import MaskedInput from 'react-text-mask';
+import Input from 'material-ui/Input';
 
 const styles = theme => ({
     root: {
@@ -174,7 +176,12 @@ class PhoneRow extends Component {
                         </Select> 
                     </Grid>
                     <Grid item >
-                        <TextField className={classes.textField} type="text" value={ this.props.phone.num } onChange={ this.props.onNumChanged(this.props.index) } /> 
+                        <Input 
+                            className={classes.textField} 
+                            type="text"
+                            inputComponent={ TextMaskCustom }
+                            value={ this.props.phone.num } 
+                            onChange={ this.props.onNumChanged(this.props.index) } /> 
                     </Grid>
                     { this.props.index !== 0 && <Grid item xs ><IconButton onClick={ this.props.removePhone(this.props.index) } ><DeleteIcon/></IconButton></Grid> }
                 </Grid>
@@ -182,5 +189,18 @@ class PhoneRow extends Component {
         );
     }
 }
+
+class TextMaskCustom extends React.Component {
+    render() {
+      return (
+        <MaskedInput
+          {...this.props}
+          mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+          placeholderChar={'\u2000'}
+          showMask
+        />
+      );
+    }
+  }
 
 export default withStyles(styles)(MultiPhoneInput);
