@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import MultiPhoneInput from './multi-tel-input';
+import MultiPhoneInput from './multi-tel-comp/multi-tel-input';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      phones: [{num: '9993154885', type: 'Mobile'}]
+      phones: [{num: '(999) 315-4885', type: 'Mobile'}]
     }
 
     this.handlePhonesChange = this.handlePhonesChange.bind(this);
