@@ -1,4 +1,25 @@
-import React, { Component, button } from 'react';
+import React, { Component } from 'react';
+import Button from 'material-ui/Button';
+import Select from 'material-ui/Select';
+import { MenuItem } from 'material-ui/Menu';
+import TextField from 'material-ui/TextField';
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from 'material-ui-icons/Delete';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
+
+const styles = theme => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    textField: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      width: 200,
+    },
+  });
+
 
 class MultiPhoneInput extends Component {
     constructor(props) {
@@ -99,42 +120,61 @@ class MultiPhoneInput extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
-            <span>
-                <ul> 
-                    {this.state.phones.map((p, idx) => {
-                        return  <PhoneRow 
-                                    key={ idx }
-                                    types={ this.state.types } 
-                                    phone={p} 
-                                    onNumChanged={ this.onNumChanged }
-                                    onTypeChanged={ this.onTypeChanged }
-                                    removePhone = { this.removePhone }
-                                    index={ idx }
-                                />;
-                    })} 
-                </ul>
-                <button onClick={ this.log }>Log</button>
-                <button onClick={ this.addPhone }>Add Another</button>
-            </span>
+            <Grid container className={classes.root} direction="column" spacing={16} justify="center" alignItems="center">
+                <Grid item xs >
+                    <Grid container direction="column" justify="center" alignItems="center" spacing={16}> 
+                        {this.state.phones.map((p, idx) => {
+                            return  <PhoneRow
+                                        classes = {classes}
+                                        key={ idx }
+                                        types={ this.state.types } 
+                                        phone={p} 
+                                        onNumChanged={ this.onNumChanged }
+                                        onTypeChanged={ this.onTypeChanged }
+                                        removePhone = { this.removePhone }
+                                        index={ idx }
+                                    />;
+                        })} 
+                    </Grid>
+                </Grid>
+                <Grid item xs >    
+                    <Grid container direction="row" alignItems="center" spacing={16}>
+                        <Grid item xs > 
+                            <Button style={{heigh: 60}} color="primary" onClick={ this.log }>Log</Button>
+                        </Grid>
+                        <Grid item xs > 
+                            <Button raised color="primary" onClick={ this.addPhone }>Add Another</Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
         );
     }
 }
 
 class PhoneRow extends Component {
     render() {
+        const { classes } = this.props;
         return (
-            <li>
-                <select value={ this.props.phone.type } onChange={ this.props.onTypeChanged(this.props.index) } >
-                    {this.props.types.map((t) => {
-                        return <option disabled={ !t.available } key={ t.name } value={ t.name }>{ t.name }</option>
-                    })}
-                </select> 
-                <input type="text" value={ this.props.phone.num } onChange={ this.props.onNumChanged(this.props.index) } /> 
-                { this.props.index !== 0 && <button onClick={ this.props.removePhone(this.props.index) } >Remove</button> }
-            </li>
+            <Grid item xs >
+                <Grid container className={classes.root} direction="row" justify="flex-start" alignItems="center" spacing={8}>
+                    <Grid item xs > 
+                        <Select value={ this.props.phone.type } onChange={ this.props.onTypeChanged(this.props.index) } >
+                            {this.props.types.map((t) => {
+                                return <MenuItem disabled={ !t.available } key={ t.name } value={ t.name }>{ t.name }</MenuItem>
+                            })}
+                        </Select> 
+                    </Grid>
+                    <Grid item xs >
+                        <TextField className={classes.textField} type="text" margin="normal" value={ this.props.phone.num } onChange={ this.props.onNumChanged(this.props.index) } /> 
+                    </Grid>
+                    { this.props.index !== 0 && <Grid item xs ><IconButton onClick={ this.props.removePhone(this.props.index) } ><DeleteIcon/></IconButton></Grid> }
+                </Grid>
+            </Grid>
         );
     }
 }
 
-export default MultiPhoneInput;
+export default withStyles(styles)(MultiPhoneInput);
