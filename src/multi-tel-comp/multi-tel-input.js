@@ -28,6 +28,8 @@ class MultiPhoneInput extends Component {
     super(props);
     let initialPhones;
     let initialTypes;
+
+    // Initialize phones array from props or from default values
     if (props.phones && props.phones.length > 0) {
       initialPhones = props.phones;
       initialTypes = props.types.map((type) => {
@@ -39,6 +41,8 @@ class MultiPhoneInput extends Component {
       initialTypes = props.types.map(t => ({ name: t, available: t !== props.types[0] }));
     }
 
+    // Phones will store the current phone numbers with a type
+    // Types will store the list of types available and whether or not are they available to choose.
     this.state = {
       phones: initialPhones,
       types: initialTypes,

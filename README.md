@@ -4,4 +4,4 @@ Sample project for React component multi-tel-input, a form component to enter mu
 
 ## Run the demo
 
-yarn start
+yarn install && yarn start
