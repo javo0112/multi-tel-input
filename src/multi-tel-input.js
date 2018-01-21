@@ -3,11 +3,22 @@ import React, { Component, button } from 'react';
 class MultiPhoneInput extends Component {
     constructor(props) {
         super(props);
-        var defaultType = props.types[0];
+        var initialPhones;
+        var initialTypes;
+        if (props.phones && props.phones.length > 0) {
+            initialPhones = props.phones;
+            initialTypes = props.types.map(type => {
+                var typeUsed = props.phones.find(phone => phone.type === type );
+                return {name: type, available: typeUsed ? false : true }
+            })
+        } else {
+            initialPhones = [{num: '', type: props.types[0]}];
+            initialTypes = props.types.map(t => ({name: t, available: t !== props.types[0] }))
+        }
         
         this.state = {
-            phones: [{num: '', type: defaultType}],
-            types: props.types.map(t => ({name: t, available: t !== defaultType }))
+            phones: initialPhones,
+            types: initialTypes
         }
 
         // Functions defined

@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      phones: []
+      phones: [{num: '121445', type: 'Work'}]
     }
 
     this.handlePhonesChange = this.handlePhonesChange.bind(this);
@@ -25,7 +25,10 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">InfoLob React Test</h1>
         </header>
-        <MultiPhoneInput types={["Home", "Mobile", "Work", "Other"]} onPhonesChange={this.handlePhonesChange} />
+        <MultiPhoneInput
+          phones={ this.state.phones } 
+          types={["Home", "Mobile", "Work", "Other"]} 
+          onPhonesChange={ this.handlePhonesChange } />
       </div>
     );
   }
