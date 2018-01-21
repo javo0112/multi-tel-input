@@ -1,3 +1,7 @@
-#multi-tel-input
+# multi-tel-input Sample
 
-A React component to handle multiple phone fields. 
+Sample project for React component multi-tel-input, a form component to enter multiple phone numbers.
+
+## Run the demo
+
+yarn start

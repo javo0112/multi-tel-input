@@ -216,7 +216,7 @@ MultiPhoneInput.propTypes = {
     types: PropTypes.arrayOf(PropTypes.string),
     onPhonesChange: PropTypes.func.isRequired,
     phones: PropTypes.arrayOf(function(propValue, key, componentName, location, propFullName) {
-        if( !propValue[key]['num'] || !propValue[key]['type'] ){
+        if( !propValue[key].hasOwnProperty('num') || !propValue[key].hasOwnProperty('type')){
             return new Error(`Invalid prop ${propFullName} supplied to ${componentName}. Use the format [{num: '1234567', type: 'Mobile'}]`)
         }
     })
