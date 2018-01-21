@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Button from 'material-ui/Button';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
-import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Grid from 'material-ui/Grid';
@@ -37,7 +36,7 @@ class MultiPhoneInput extends Component {
         if (props.phones && props.phones.length > 0) {
             initialPhones = props.phones;
             initialTypes = props.types.map(type => {
-                var typeUsed = props.phones.find(phone => phone.type === type );
+                const typeUsed = props.phones.find(phone => phone.type === type );
                 return {name: type, available: typeUsed ? false : true }
             })
         } else {
@@ -60,14 +59,14 @@ class MultiPhoneInput extends Component {
 
     addPhone() {
         this.setState(previousState => {        
-            var nextType = previousState.types.find(t => t.available === true);
+            const nextType = previousState.types.find(t => t.available === true);
             if (!nextType) return;
-            var typesUpdated = previousState.types.map(t => {
+            const typesUpdated = previousState.types.map(t => {
                 if (t.name !== nextType.name) return t;
                 return { ...t, available: false };
             });
 
-            var phonesUpdated = [ ...previousState.phones, {num: '', type: nextType.name}];
+            const phonesUpdated = [ ...previousState.phones, {num: '', type: nextType.name}];
             this.props.onPhonesChange(phonesUpdated);
 
             return ({ 
@@ -78,9 +77,9 @@ class MultiPhoneInput extends Component {
 
     removePhone = (index) => (event) => {
         this.setState(previousState => {
-            var phoneToRemove = previousState.phones[index];
-            var phonesUpdated = previousState.phones.filter(p => p.type !== phoneToRemove.type)
-            var typesUpdated = previousState.types.map(t => {
+            const phoneToRemove = previousState.phones[index];
+            const phonesUpdated = previousState.phones.filter(p => p.type !== phoneToRemove.type)
+            const typesUpdated = previousState.types.map(t => {
                 if (t.name !== phoneToRemove.type) return t;
                 return { ...t, available: true };
             });
@@ -97,10 +96,10 @@ class MultiPhoneInput extends Component {
     }
 
     onNumChanged = (index) => (event) => {
-        var newValue = event.target.value;
+        const newValue = event.target.value;
         this.setState(previousState => {
             
-            var phonesUpdated = previousState.phones.map((p, i) => {
+            const phonesUpdated = previousState.phones.map((p, i) => {
                 if(index !== i) return p;
                 return { ...p, num: newValue };
             });
@@ -110,14 +109,14 @@ class MultiPhoneInput extends Component {
     }
 
     onTypeChanged = (index) => (event) => {
-        var newValue = event.target.value;
+        const newValue = event.target.value;
         this.setState(previousState => {
-            var phoneToUpdate = previousState.phones[index];
-            var phonesUpdated = previousState.phones.map((p, i) => {
+            const phoneToUpdate = previousState.phones[index];
+            const phonesUpdated = previousState.phones.map((p, i) => {
                 if(index !== i) return p;
                 return { ...p, type: newValue };
             });
-            var typesUpdated = previousState.types.map(t => {
+            const typesUpdated = previousState.types.map(t => {
                 if (t.name === phoneToUpdate.type) return {...t , available: true};
                 if (t.name === newValue) return { ...t, available: false};
                 return t;
