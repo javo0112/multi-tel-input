@@ -5,6 +5,8 @@
         "strict": 0,
         "react/jsx-filename-extension" : "off",
         "react/prefer-stateless-function": "off",
-        "react/no-multi-comp": "off"
+        "react/no-multi-comp": "off",
+        "no-prototype-builtins" : "off",
+        "react/no-array-index-key" : "off"
     }
 }

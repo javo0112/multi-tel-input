@@ -23,7 +23,7 @@ class PhoneRow extends Component {
       <Grid item xs >
         <Grid container className={classes.root} direction="row" justify="flex-start" alignItems="center" spacing={8}>
           <Grid item >
-            <Select className={classes.select} value={phone.type} onChange={onTypeChanged(index)} >
+            <Select className={classes.select} value={phone.type} onChange={event => onTypeChanged(event, index)} >
               {types.map(t =>
                 <MenuItem disabled={!t.available} key={t.name} value={t.name}>{ t.name }</MenuItem>)
               }
@@ -35,12 +35,12 @@ class PhoneRow extends Component {
               type="text"
               inputComponent={TextMask}
               value={phone.num}
-              onChange={onNumChanged(this.props.index)}
+              onChange={event => onNumChanged(event, index)}
             />
           </Grid>
           { index !== 0 &&
             <Grid item xs >
-              <IconButton onClick={removePhone(index)} >
+              <IconButton onClick={event => removePhone(event, index)} >
                 <DeleteIcon />
               </IconButton>
             </Grid> }

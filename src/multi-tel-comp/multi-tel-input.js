@@ -43,16 +43,9 @@ class MultiPhoneInput extends Component {
       phones: initialPhones,
       types: initialTypes,
     };
-
-    // Functions defined
-    this.addPhone = this.addPhone.bind(this);
-    this.removePhone = this.removePhone.bind(this);
-    this.log = this.log.bind(this);
-    this.onNumChanged = this.onNumChanged.bind(this);
-    this.onTypeChanged = this.onTypeChanged.bind(this);
   }
 
-  onNumChanged = index => (event) => {
+  onNumChanged(event, index) {
     const newValue = event.target.value;
     this.setState((previousState) => {
       const phonesUpdated = previousState.phones.map((p, i) => {
@@ -66,7 +59,7 @@ class MultiPhoneInput extends Component {
     });
   }
 
-  onTypeChanged = index => (event) => {
+  onTypeChanged(event, index) {
     const newValue = event.target.value;
     this.setState((previousState) => {
       const phoneToUpdate = previousState.phones[index];
@@ -106,7 +99,7 @@ class MultiPhoneInput extends Component {
     });
   }
 
-  removePhone = index => (event) => {
+  removePhone(event, index) {
     this.setState((previousState) => {
       const phoneToRemove = previousState.phones[index];
       const phonesUpdated = previousState.phones.filter(p => p.type !== phoneToRemove.type);
@@ -138,9 +131,9 @@ class MultiPhoneInput extends Component {
               key={idx}
               types={this.state.types}
               phone={p}
-              onNumChanged={this.onNumChanged}
-              onTypeChanged={this.onTypeChanged}
-              removePhone={this.removePhone}
+              onNumChanged={(event, index) => this.onNumChanged(event, index)}
+              onTypeChanged={(event, index) => this.onTypeChanged(event, index)}
+              removePhone={(event, index) => this.removePhone(event, index)}
               index={idx}
             />))}
           </Grid>
@@ -148,10 +141,10 @@ class MultiPhoneInput extends Component {
         <Grid item xs >
           <Grid container direction="row" alignItems="center" spacing={16}>
             <Grid item xs >
-              <Button style={{ heigh: 60 }} color="primary" onClick={this.log}>Log</Button>
+              <Button style={{ heigh: 60 }} color="primary" onClick={() => this.log()}>Log</Button>
             </Grid>
             <Grid item xs >
-              <Button raised color="primary" onClick={this.addPhone}>Add Another</Button>
+              <Button raised color="primary" onClick={() => this.addPhone()}>Add Another</Button>
             </Grid>
           </Grid>
         </Grid>
