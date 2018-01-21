@@ -23,7 +23,11 @@ class PhoneRow extends Component {
       <Grid item xs >
         <Grid container className={classes.root} direction="row" justify="flex-start" alignItems="center" spacing={8}>
           <Grid item >
-            <Select className={classes.select} value={phone.type} onChange={event => onTypeChanged(event, index)} >
+            <Select
+              className={classes.select}
+              value={phone.type}
+              onChange={event => onTypeChanged(event, index)}
+            >
               {types.map(t =>
                 <MenuItem disabled={!t.available} key={t.name} value={t.name}>{ t.name }</MenuItem>)
               }
@@ -68,6 +72,7 @@ PhoneRow.propTypes = {
     if (!propValue[key].hasOwnProperty('name') || !propValue[key].hasOwnProperty('available')) {
       return new Error(`Invalid prop ${propFullName} supplied to ${componentName}. Use the format [{name: 'Home', available: true}]`);
     }
+    return null;
   }),
   classes: PropTypes.shape({
     root: PropTypes.string,

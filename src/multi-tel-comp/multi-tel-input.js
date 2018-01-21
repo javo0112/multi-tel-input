@@ -82,7 +82,7 @@ class MultiPhoneInput extends Component {
   addPhone() {
     this.setState((previousState) => {
       const nextType = previousState.types.find(t => t.available === true);
-      if (!nextType) return;
+      if (!nextType) return null;
       const typesUpdated = previousState.types.map((t) => {
         if (t.name !== nextType.name) return t;
         return { ...t, available: false };
@@ -92,10 +92,10 @@ class MultiPhoneInput extends Component {
 
       if (this.props.onPhonesChange) this.props.onPhonesChange(phonesUpdated);
 
-      return ({
+      return {
         types: typesUpdated,
         phones: phonesUpdated,
-      });
+      };
     });
   }
 
@@ -110,10 +110,10 @@ class MultiPhoneInput extends Component {
 
       if (this.props.onPhonesChange) this.props.onPhonesChange(phonesUpdated);
 
-      return ({
+      return {
         phones: phonesUpdated,
         types: typesUpdated,
-      });
+      };
     });
   }
 
@@ -141,7 +141,7 @@ class MultiPhoneInput extends Component {
         <Grid item xs >
           <Grid container direction="row" alignItems="center" spacing={16}>
             <Grid item xs >
-              <Button style={{ heigh: 60 }} color="primary" onClick={() => this.log()}>Log</Button>
+              <Button color="primary" onClick={() => this.log()}>Log</Button>
             </Grid>
             <Grid item xs >
               <Button raised color="primary" onClick={() => this.addPhone()}>Add Another</Button>
@@ -164,6 +164,7 @@ MultiPhoneInput.propTypes = {
     if (!propValue[key].hasOwnProperty('num') || !propValue[key].hasOwnProperty('type')) {
       return new Error(`Invalid prop ${propFullName} supplied to ${componentName}. Use the format [{num: '1234567', type: 'Mobile'}]`);
     }
+    return null;
   }).isRequired,
   classes: PropTypes.shape({
     root: PropTypes.string,
