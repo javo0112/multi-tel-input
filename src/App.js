@@ -8,7 +8,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      phones: [{num: '121445', type: 'Work'}]
+      phones: [{num: '9993154885', type: 'Mobile'}]
     }
 
     this.handlePhonesChange = this.handlePhonesChange.bind(this);
@@ -23,12 +23,13 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">InfoLob React Test</h1>
+          <h1 className="App-title">Multi Phone Input Component</h1>
         </header>
         <MultiPhoneInput
           phones={ this.state.phones } 
           types={["Home", "Mobile", "Work", "Other"]} 
-          onPhonesChange={ this.handlePhonesChange } />
+          onPhonesChange={ this.handlePhonesChange } 
+          />
       </div>
     );
   }

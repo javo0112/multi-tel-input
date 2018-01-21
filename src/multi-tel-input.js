@@ -8,6 +8,7 @@ import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import MaskedInput from 'react-text-mask';
 import Input from 'material-ui/Input';
+import PropTypes from 'prop-types';
 
 const styles = theme => ({
     root: {
@@ -24,9 +25,8 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         width: 100,
-      },
-  });
-
+    },
+});
 
 class MultiPhoneInput extends Component {
     constructor(props) {
@@ -67,7 +67,8 @@ class MultiPhoneInput extends Component {
             });
 
             const phonesUpdated = [ ...previousState.phones, {num: '', type: nextType.name}];
-            this.props.onPhonesChange(phonesUpdated);
+
+            if(this.props.onPhonesChange) this.props.onPhonesChange(phonesUpdated);
 
             return ({ 
                 types: typesUpdated,
@@ -83,7 +84,9 @@ class MultiPhoneInput extends Component {
                 if (t.name !== phoneToRemove.type) return t;
                 return { ...t, available: true };
             });
-            this.props.onPhonesChange(phonesUpdated);
+
+            if(this.props.onPhonesChange) this.props.onPhonesChange(phonesUpdated);
+
             return ({
                 phones: phonesUpdated,
                 types: typesUpdated,
@@ -98,12 +101,13 @@ class MultiPhoneInput extends Component {
     onNumChanged = (index) => (event) => {
         const newValue = event.target.value;
         this.setState(previousState => {
-            
             const phonesUpdated = previousState.phones.map((p, i) => {
                 if(index !== i) return p;
                 return { ...p, num: newValue };
             });
-            this.props.onPhonesChange(phonesUpdated);
+
+            if(this.props.onPhonesChange) this.props.onPhonesChange(phonesUpdated);
+
             return { phones: phonesUpdated };
         });
     }
@@ -121,7 +125,9 @@ class MultiPhoneInput extends Component {
                 if (t.name === newValue) return { ...t, available: false};
                 return t;
             });
-            this.props.onPhonesChange(phonesUpdated);
+
+            if(this.props.onPhonesChange) this.props.onPhonesChange(phonesUpdated);
+            
             return { phones: phonesUpdated, types: typesUpdated };
         });
     }
@@ -196,10 +202,24 @@ class TextMaskCustom extends React.Component {
           {...this.props}
           mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
           placeholderChar={'\u2000'}
-          showMask
+          
         />
       );
     }
-  }
+}
+
+MultiPhoneInput.defaultProps = {
+    types: ['Home', 'Mobile', 'Work', 'Others'],
+}
+
+MultiPhoneInput.propTypes = {
+    types: PropTypes.arrayOf(PropTypes.string),
+    onPhonesChange: PropTypes.func.isRequired,
+    phones: PropTypes.arrayOf(function(propValue, key, componentName, location, propFullName) {
+        if( !propValue[key]['num'] || !propValue[key]['type'] ){
+            return new Error(`Invalid prop ${propFullName} supplied to ${componentName}. Use the format [{num: '1234567', type: 'Mobile'}]`)
+        }
+    })
+}
 
 export default withStyles(styles)(MultiPhoneInput);
