@@ -12,12 +12,18 @@ const styles = theme => ({
     root: {
       display: 'flex',
       flexWrap: 'wrap',
+      paddingTop: 16,
     },
     textField: {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
       width: 200,
     },
+    select: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 100,
+      },
   });
 
 
@@ -124,7 +130,7 @@ class MultiPhoneInput extends Component {
         return (
             <Grid container className={classes.root} direction="column" spacing={16} justify="center" alignItems="center">
                 <Grid item xs >
-                    <Grid container direction="column" justify="center" alignItems="center" spacing={16}> 
+                    <Grid container direction="column" justify="center" alignItems="flex-start" spacing={16}> 
                         {this.state.phones.map((p, idx) => {
                             return  <PhoneRow
                                         classes = {classes}
@@ -160,15 +166,15 @@ class PhoneRow extends Component {
         return (
             <Grid item xs >
                 <Grid container className={classes.root} direction="row" justify="flex-start" alignItems="center" spacing={8}>
-                    <Grid item xs > 
-                        <Select value={ this.props.phone.type } onChange={ this.props.onTypeChanged(this.props.index) } >
+                    <Grid item > 
+                        <Select className={classes.select} value={ this.props.phone.type } onChange={ this.props.onTypeChanged(this.props.index) } >
                             {this.props.types.map((t) => {
                                 return <MenuItem disabled={ !t.available } key={ t.name } value={ t.name }>{ t.name }</MenuItem>
                             })}
                         </Select> 
                     </Grid>
-                    <Grid item xs >
-                        <TextField className={classes.textField} type="text" margin="normal" value={ this.props.phone.num } onChange={ this.props.onNumChanged(this.props.index) } /> 
+                    <Grid item >
+                        <TextField className={classes.textField} type="text" value={ this.props.phone.num } onChange={ this.props.onNumChanged(this.props.index) } /> 
                     </Grid>
                     { this.props.index !== 0 && <Grid item xs ><IconButton onClick={ this.props.removePhone(this.props.index) } ><DeleteIcon/></IconButton></Grid> }
                 </Grid>
