@@ -8,14 +8,14 @@ class App extends Component {
     super(props);
 
     this.state = {
-      phones: [{num: '(999) 315-4885', type: 'Mobile'}]
-    }
+      phones: [{ num: '(999) 315-4885', type: 'Mobile' }],
+    };
 
     this.handlePhonesChange = this.handlePhonesChange.bind(this);
   }
 
-  handlePhonesChange(phones) {
-    this.setState({phones: phones});
+  handlePhonesChange(newPhones) {
+    this.setState({ phones: newPhones });
   }
 
   render() {
@@ -26,13 +26,13 @@ class App extends Component {
           <h1 className="App-title">Multi Phone Input Component</h1>
         </header>
         <MultiPhoneInput
-          phones={ this.state.phones } 
-          types={["Home", "Mobile", "Work", "Other"]} 
-          onPhonesChange={ this.handlePhonesChange } 
-          />
+          phones={this.state.phones}
+          types={['Home', 'Mobile', 'Work', 'Other']}
+          onPhonesChange={this.handlePhonesChange}
+        />
       </div>
     );
-  } 
+  }
 }
 
 export default App;
